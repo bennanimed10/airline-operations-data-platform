@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: raw
+    database: AIR_OPS
+    schema: RAW
+
+    tables:
+      - name: flights
+        identifier: FLIGHTS
+
+        columns:
+          - name: FlightDate
+            quote: true
+            data_tests:
+              - not_null
+
+          - name: Reporting_Airline
+            quote: true
+            data_tests:
+              - not_null
+
+          - name: Origin
+            quote: true
+            data_tests:
+              - not_null
+
+          - name: Dest
+            quote: true
+            data_tests:
+              - not_null
+
+          - name: Cancelled
+            quote: true
+            data_tests:
+              - not_null
+
+          - name: Diverted
+            quote: true
+            data_tests:
+              - not_null
