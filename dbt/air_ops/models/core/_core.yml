@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: dim_airport
+    description: One row per FAA airport, from the latest FAA cycle.
+
+    columns:
+
+      - name: airport_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: airport_code
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_airline
+    description: One row per reporting airline code found in BTS flights.
+
+    columns:
+
+      - name: airline_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: airline_code
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    description: One row per flight date found in BTS flights.
+
+    columns:
+
+      - name: date_key
+        data_tests:
+          - not_null
+          - unique
+
+      - name: full_date
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fact_flight
+    description: One row per BTS flight occurrence. Loaded incrementally by ingested_at.
+
+    columns:
+
+      - name: flight_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: airline_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_airline')
+                field: airline_key
+
+      # Warn only: some BTS airport codes do not exist in FAA data
+      - name: origin_airport_key
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+
+      - name: destination_airport_key
+        data_tests:
+          - not_null:
+              config:
+                severity: warn

@@ -34,12 +34,16 @@ models:
 
     staging:
       +materialized: view
+      +schema: SILVER
 
     intermediate:
       +materialized: view
+      +schema: SILVER
 
     core:
       +materialized: table
+      +schema: CORE
 
     marts:
       +materialized: table
+      +schema: MARTS

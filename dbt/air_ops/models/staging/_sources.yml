@@ -39,3 +39,17 @@ sources:
             quote: true
             data_tests:
               - not_null
+
+      - name: airports
+        identifier: AIRPORTS
+        description: FAA airport base data (APT_BASE.csv), one row per facility per FAA cycle.
+
+        columns:
+          - name: ARPT_ID
+            description: FAA location identifier (primary airport identifier).
+            data_tests:
+              - not_null
+
+          - name: ARPT_NAME
+            data_tests:
+              - not_null
